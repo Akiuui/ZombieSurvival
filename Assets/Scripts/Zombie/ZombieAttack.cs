@@ -5,6 +5,7 @@ public class ZombieAttack : MonoBehaviour
     private PlayerManager player;
     private Animator animator;
     private ZombieManager zombie;
+    private ZombieSounds zombieSounds;
 
     public float attackSpeedPerSecond = 1f;
     private float attackTimer = 0f;
@@ -14,6 +15,7 @@ public class ZombieAttack : MonoBehaviour
         player = FindFirstObjectByType<PlayerManager>();
         animator = GetComponentInParent<Animator>();
         zombie = GetComponentInParent<ZombieManager>();
+        zombieSounds = GetComponentInParent<ZombieSounds>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -40,6 +42,7 @@ public class ZombieAttack : MonoBehaviour
 
         if (attackTimer < 0) { 
             player.TakeDamage(10);
+            zombieSounds.PlayAttackSound();
             attackTimer = 1f / attackSpeedPerSecond; 
         }
     }

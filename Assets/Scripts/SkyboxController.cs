@@ -17,7 +17,7 @@ public class SkyboxController : MonoBehaviour
     {
         float time = gameClock.currentHours + (gameClock.currentMinutes / 60f);
 
-        float t = Mathf.InverseLerp(6f, 18f, time); // Blends between 6 AM and 6 PM
+        float t = Mathf.InverseLerp(6f, 18f, time);
 
         RenderSettings.skybox.Lerp(skyboxNight, skyboxDay, t);
         DynamicGI.UpdateEnvironment(); // Updates lighting

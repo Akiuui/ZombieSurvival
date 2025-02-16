@@ -28,6 +28,9 @@ public class ItemPickup : MonoBehaviour
                 if(obj.tag == "HealingBox")
                     playerManager.Heal(50);
 
+                if (obj.tag == "Objective")
+                    playerManager.collectObjective();
+
                 Destroy(obj,1f);
             }
         }

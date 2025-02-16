@@ -11,11 +11,14 @@ public class PlayerManager : MonoBehaviour
 
     private int Health;
     private float Stamina;
+    public int ObjectivesCollected { get; private set; }
 
     private GameManager gameManager;
+    private PlayerSounds playerSounds;
     private void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
+        playerSounds = GetComponent<PlayerSounds>();
 
         Health = MaxHealth;
         healthSlider.maxValue = MaxHealth;
@@ -26,9 +29,16 @@ public class PlayerManager : MonoBehaviour
         staminaSlider.value = Stamina;
     }
 
+    public void collectObjective()
+    {
+        ObjectivesCollected++;
+
+        if (ObjectivesCollected == 4)
+            print("Good game");
+    }
+
     public float getStamina()
     {
-
         return Stamina;
     }
 
@@ -43,26 +53,20 @@ public class PlayerManager : MonoBehaviour
 
     public void LessenStamina(float amount)
     {
-
         Stamina -= amount;
-
-
     }
     public void BoostStamina(float amount)
     {
         Stamina += amount;
-
-
     }
 
     public void TakeDamage(int damage)
     {
         Health -= damage;
-
+        playerSounds.PlayHurtSound();
 
         if (Health <= 0)
             gameManager.GameOver();
-
     }
     public void Heal(int amount)
     {
@@ -75,7 +79,6 @@ public class PlayerManager : MonoBehaviour
             Health = 100;
         else
             Health += amount;
-
     }
 
 }

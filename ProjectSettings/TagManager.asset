@@ -20,6 +20,7 @@ TagManager:
   - BodyCollider
   - Bullet
   - HealingBox
+  - Objective
   layers:
   - Default
   - TransparentFX

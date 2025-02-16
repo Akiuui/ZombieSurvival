@@ -11,7 +11,7 @@ public class ZombieController : MonoBehaviour
     public float fieldOfView = 130f;
     public LayerMask obstacleMask;
 
-    public GameObject objectToFollow;
+    private GameObject objectToFollow;
     //public NavMeshAgent agent;
     private ZombieManager zombie;
 
@@ -25,15 +25,17 @@ public class ZombieController : MonoBehaviour
     {
         objectToFollow = GameObject.Find("Player");
         zombie = GetComponentInParent<ZombieManager>();
+        print("Zombie: "+zombie);
         //agent.stoppingDistance = 1f;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (zombie.seenHeardPlayer) return;
 
         if (other.CompareTag("Player"))
         {
+            if (zombie.seenHeardPlayer) return;
+
             StartCoroutine(CheckVision());
         }
     }
@@ -59,7 +61,6 @@ public class ZombieController : MonoBehaviour
         while (isCheckingVision)
         {
             yield return new WaitForSeconds(0.5f);
-            print("Radi korutina");
             if (CanSeePlayer())
             {
                 zombie.seenHeardPlayer = true;

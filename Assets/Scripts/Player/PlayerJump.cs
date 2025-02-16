@@ -7,12 +7,14 @@ public class PlayerJump : MonoBehaviour
     public float jumpForce;
     private Rigidbody rb;
     private PlayerManager playerManager;
+    private PlayerSounds playerSounds;
 
     public LayerMask groundLayer;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         playerManager = FindFirstObjectByType<PlayerManager>();
+        playerSounds = GetComponent<PlayerSounds>();
     }
 
     void Update()
@@ -21,7 +23,6 @@ public class PlayerJump : MonoBehaviour
         if (IsGrounded() && Input.GetKeyDown(KeyCode.Space) && playerManager.getStamina()>=20)
         {
             playerManager.LessenStamina(20f);
-            print("Jumped");
             Jump();
         }
 
@@ -34,5 +35,6 @@ public class PlayerJump : MonoBehaviour
     private void Jump()
     {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        playerSounds.PlayJumpSound();
     }
 }

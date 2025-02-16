@@ -14,27 +14,51 @@ public class ZombieManager : MonoBehaviour
     public bool alive = true;
 
     private Animator animator;
-    public GameObject objectToFollow;
+    private GameObject objectToFollow;
     private NavMeshAgent agent;
+    private ZombieSounds zombieSounds;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = 1f;
+        zombieSounds = GetComponent<ZombieSounds>();
+        objectToFollow = GameObject.FindGameObjectWithTag("Player");
 
         health = maxHealth;
     }
 
+    private bool playSoundOnce = true;
     private void Update()
     {
+
+        if (!seenHeardPlayer && agent.velocity.magnitude > 0.1f)
+        {
+            agent.speed = 1f;
+            agent.angularSpeed = 100;
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
+
         if (seenHeardPlayer && alive)
         {
+            agent.speed = 4f;
+            agent.angularSpeed = 200;
+
             animator.SetBool("isRunning", true);
             agent.SetDestination(objectToFollow.transform.position);
-            //seenFirstTime = false;
+            if (playSoundOnce)
+            {
+                zombieSounds.PlayAngrySound();
+                playSoundOnce = false;
+            }
         }
+
     }
+   
     public void takeDamage(int damage) { 
     
         health -= damage;
@@ -52,6 +76,7 @@ public class ZombieManager : MonoBehaviour
         alive = false;
         DisableAllScripts(gameObject);
         agent.isStopped = true;
+        zombieSounds.PlayDeathSound();
 
         Destroy(gameObject, bodyDissapear);
 

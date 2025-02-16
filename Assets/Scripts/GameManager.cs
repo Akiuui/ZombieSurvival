@@ -8,6 +8,7 @@ public enum GameState
     Running,
     Over,
     Paused,
+    Map,
 }
 
 public class GameManager : MonoBehaviour
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverUI;
     public GameObject runningUI;
     public GameObject pausedUI;
-    
+    public GameObject mapUI;
 
     private void Start()
     {
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
         runningUI.SetActive(false);
         pausedUI.SetActive(false);
         gameOverUI.SetActive(false);
+        mapUI.SetActive(false);
 
         switch (currentState)
         {
@@ -58,9 +60,16 @@ public class GameManager : MonoBehaviour
                 gameOverUI.SetActive(true);
                 break;
 
-
+            case GameState.Map:
+                Time.timeScale = 1f;
+                mapUI.SetActive(true);
+                break;
         }
     }
+    public void ShowMap() { 
+        ChangeState(GameState.Map);
+    }
+
     public void StartGame()
     {
         ChangeState(GameState.MainMenu);

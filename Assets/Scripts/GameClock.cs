@@ -26,7 +26,7 @@ public class GameClock : MonoBehaviour
         float timeInDay = currentHours + (currentMinutes / 60f);
         float sunRotation = (timeInDay / 24f) * 360f;
 
-        sun.transform.rotation = Quaternion.Euler(sunRotation - 90f, 170f, 0f);
+        //sun.transform.rotation = Quaternion.Euler(sunRotation - 90f, 170f, 0f);
         gameClock.text = string.Format("{0:D2}:{1:D2}", currentHours, currentMinutes);
 
     }

@@ -17,13 +17,14 @@ public class ZombieDetectBullets : MonoBehaviour
         if (gameObject.name == "Body (collider)")
         {
             zombie.takeDamage(bulletDamage);
-            print("Body");
         }
 
         if (gameObject.name == "Head (collider)")
         {
             zombie.takeDamage(headshotDamage);
-            print("HeadShot");
+            SkinnedMeshRenderer render = GetComponent<SkinnedMeshRenderer>();
+            if(render == true)
+                render.enabled = false;
         }
 
 
